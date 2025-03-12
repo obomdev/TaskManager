@@ -1,26 +1,26 @@
 import { Text, View, StyleSheet, ImageBackground, TouchableOpacity } from "react-native"
 
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/FontAwesome"
 
 import moment from "moment-timezone"
 import 'moment/locale/pt-br'
 
 import todayImage from '../../assets/imgs/today.jpg'
+import Task from "../components/Task"
 
 export default function TaskList(){
-    
-    const userTimeZone = moment.tz.guess(); // Detecta fuso horário do dispositivo
-    console.log(userTimeZone)
+
+    const userTimeZone = moment.tz.guess(); // Detecta o fuso horario do dispositivo
     const today = moment().tz('America/Sao_Paulo').locale('pt-br').format('ddd, D [de] MMMM')
-    //const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
+    // const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
 
     return(
         <View style={styles.container}>
             
             <ImageBackground source={todayImage} style={styles.background}>
-                <View style={styles.IconBar}>
+                <View style={styles.iconBar}>
                     <TouchableOpacity onPress={() => console.warn('oi')}>
-                        <Icon name="eye" size={30} color={'#fff'}/>
+                        <Icon name="eye" size={20} color={'#fff'}/>
                     </TouchableOpacity>
                 </View>
 
@@ -31,9 +31,14 @@ export default function TaskList(){
             </ImageBackground>
 
             <View style={styles.taskList}>
-
+                <Task />
             </View>
-            <TouchableOpacity style={styles.addButtom} activeOpacity={0.7} onPress={() => console.warn('+')}>
+            
+            <TouchableOpacity
+                style={styles.addButton}
+                activeOpacity={0.7}
+                onPress={() => console.warn('+')}
+            >
                 <Icon name="plus" size={20} color={'#fff'} />
 
             </TouchableOpacity>
@@ -68,13 +73,13 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginBottom: 30
     },
-    IconBar: {
-        flexDirection: "row",
+    iconBar: {
+        flexDirection: 'row',
         marginHorizontal: 20,
         justifyContent: 'flex-end',
         marginTop: 25
     },
-    addButtom: {
+    addButton: {
         position: 'absolute',
         right: 30,
         bottom: 30,
