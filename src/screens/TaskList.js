@@ -12,8 +12,23 @@ export default function TaskList(){
 
     const tasks = [
         {
-
-        }
+            id: Math.random(),
+            desc: 'Elaborar o MER do TCC',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Ajustar o FiGMA',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Desenvoler o Backend',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },   
     ]
 
     const userTimeZone = moment.tz.guess(); // Detecta o fuso horario do dispositivo
@@ -42,7 +57,6 @@ export default function TaskList(){
                     keyExtractor={item => `${item.id}`}
                     renderItem={({item}) => <Task {...item}/>} 
                 />
-
             </View>
             
             <TouchableOpacity
