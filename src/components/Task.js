@@ -2,26 +2,44 @@ import {View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native'
 import commonStyles from '../commonStyles'
 import moment from 'moment-timezone'
 import 'moment/locale/pt-br'
+import Icon from "react-native-vector-icons/FontAwesome"
 
 export default props => {
     
     const date = props.doneAt ? props.doneAt : props.estimateAt
     const formattedDate = moment(date).tz('America/Sao_Paulo').locale('pt-br').format('ddd, D [de] MMMM')
     
+    const doneOrNotStyle = props.doneAt != null ? {textDecorationLine: 'line-through'} : {}
+
     return(
         <View style={styles.container}>
             <TouchableWithoutFeedback onPress={() => console.log('oi')}>
                 <View style={styles.checkContainer}>
-                    <View style={styles.pending}></View>
+                    {getCheckView(props.doneAt)}
                 </View>
             </TouchableWithoutFeedback>
             <View>
-                <Text style={styles.desc}>{props.desc}</Text>
+                <Text style={[styles.desc, doneOrNotStyle]}>{props.desc}</Text>
                 <Text style={styles.date}>{formattedDate}</Text>
             </View>
         </View>
     )
 }
+
+function getCheckView(doneAt){
+    if(doneAt != null){
+        return(
+            <View style={styles.done}>
+                <Icon name='check' size={20} color='#fff' />
+            </View>
+        )
+    } else{
+        return(
+            <View style={styles.pending}></View>
+        )
+    }
+}
+
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -42,6 +60,14 @@ const styles = StyleSheet.create({
         borderRadius: 13,
         borderWidth: 1,
         borderColor: '#555'
+    },
+    done: {
+        height: 25,
+        width: 25,
+        borderRadius: 13,
+        backgroundColor: '#4d7031',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     date: {
         color: '#555',

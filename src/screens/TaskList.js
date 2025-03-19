@@ -15,7 +15,7 @@ export default function TaskList(){
             id: Math.random(),
             desc: 'Elaborar o MER do TCC',
             estimateAt: new Date(),
-            doneAt: new Date()
+            doneAt: null
         },
         {
             id: Math.random(),
