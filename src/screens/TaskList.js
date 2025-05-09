@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Text, View, StyleSheet, ImageBackground, TouchableOpacity, FlatList } from "react-native"
+import { Text, View, StyleSheet, ImageBackground, TouchableOpacity, FlatList, Alert } from "react-native"
 
 import Icon from "react-native-vector-icons/FontAwesome"
 
@@ -43,7 +43,7 @@ export default function TaskList() {
 
     useEffect(() => {
         filterTasks()
-    }, [showDoneTasks])
+    }, [showDoneTasks, tasks])
 
     const toggleTask = taskId => {
         const taskList = [...tasks]
@@ -75,9 +75,9 @@ export default function TaskList() {
         setVisibleTasks(visibleTasks)
     }
 
-    const AddTask = newTask => {
-        if(newTask.desc || !newTask.desc.trim()){
-            Alert.alert('Dados inválidos', 'Descrição não informada!')
+    const addTask = newTask => {
+        if(!newTask.desc || !newTask.desc.trim()){
+            Alert.alert('Dados Inválidos', 'Descrição não informada!')
         }
 
         const tempTasks = [...tasks]
@@ -95,7 +95,9 @@ export default function TaskList() {
         <View style={styles.container}>
 
             <AddTask isVisible={showAddTask} 
-                onCancel={() => setShowAddTask(false)}/>
+                onCancel={() => setShowAddTask(false)}
+                onSave={addTask}
+                />
 
             <ImageBackground source={todayImage} style={styles.background}>
                 <View style={styles.iconBar}>

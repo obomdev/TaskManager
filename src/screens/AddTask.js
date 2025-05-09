@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
     Modal,
@@ -9,7 +10,7 @@ import {
     TouchableOpacity,
     Platform
 } from "react-native";
-import commonStyles from "../commonStyles";
+import commonStyles from "../CommonStyles";
 
 import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -82,7 +83,7 @@ export default function AddTask(props) {
                         <Text style={styles.button}>Cancelar</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => props.save({ desc, date })}>
+                    <TouchableOpacity onPress={() => props.onSave({ desc, date })}>
                         <Text style={styles.button}>Salvar</Text>
                     </TouchableOpacity>
                 </View>

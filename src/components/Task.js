@@ -2,7 +2,7 @@ import {View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native'
 import moment from 'moment-timezone'
 import 'moment/locale/pt-br'
 
-import commonStyles from '../commonStyles'
+import CommonStyles from '../CommonStyles' 
 import Icon from "react-native-vector-icons/FontAwesome"
 
 export default props => {
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     desc: {
-        color: commonStyles.colors.mainText,
+        color: CommonStyles.colors.mainText,
         fontSize: 15
     },
     date: {
