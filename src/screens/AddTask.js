@@ -10,7 +10,7 @@ import {
     TouchableOpacity,
     Platform
 } from "react-native";
-import commonStyles from "../CommonStyles";
+import commonStyles from "../commonStyles";
 
 import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
