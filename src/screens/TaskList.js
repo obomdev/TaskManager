@@ -5,10 +5,12 @@ import Icon from "react-native-vector-icons/FontAwesome"
 
 import moment from "moment-timezone"
 import 'moment/locale/pt-br'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import todayImage from '../../assets/imgs/today.jpg'
 import Task from "../components/Task"
 import AddTask from "./AddTask"
+
 
 const taskDB = [
     {
@@ -45,6 +47,16 @@ export default function TaskList() {
         filterTasks()
     }, [showDoneTasks, tasks])
 
+    useEffect(() => {
+        async function getTasks(){
+            const tasksString = await AsyncStorage.getItem('tasksState')
+            const tasks = JSON.parse(tasksString) || taskDB
+            setTasks(tasks)
+        }
+
+        getTasks()
+    } )
+
     const toggleTask = taskId => {
         const taskList = [...tasks]
         taskList.forEach(task => {
@@ -73,6 +85,7 @@ export default function TaskList() {
         }
 
         setVisibleTasks(visibleTasks)
+        AsyncStorage.setItem('tasksState', JSON.stringify(tasks)) //Insert Feito Com O JSON em formato de String
     }
 
     const addTask = newTask => {
@@ -87,7 +100,8 @@ export default function TaskList() {
             estimateAt: newTask.date,
             doneAt: null
         })
-        setTasks(tempTasks)
+    
+        setTasks(tempTasks) //Altera o estado Da tarefa e Seta ela Atualizada
         setShowAddTask(false)
     }
 
