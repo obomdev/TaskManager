@@ -35,7 +35,7 @@ const taskDB = [
 
 export default function TaskList() {
 
-    const [tasks, setTasks] = useState([...taskDB])
+    const [tasks, setTasks] = useState([])
     const [showDoneTasks, setShowDoneTasks] = useState(true)
     const [visibleTasks, setVisibleTasks] = useState([...tasks])
     const [showAddTask, setShowAddTask] = useState(false)
@@ -43,19 +43,26 @@ export default function TaskList() {
     const userTimeZone = moment.tz.guess(); // Detecta o fuso horario do dispositivo
     const today = moment().tz('America/Sao_Paulo').locale('pt-br').format('ddd, D [de] MMMM')
 
+    const [contador, setContador] = useState(0)
+
     useEffect(() => {
+        setContador(contador + 1)
+
+        if(contador == 0){
+            getTasks()
+        }
+
         filterTasks()
     }, [showDoneTasks, tasks])
 
-    useEffect(() => {
-        async function getTasks(){
-            const tasksString = await AsyncStorage.getItem('tasksState')
-            const tasks = JSON.parse(tasksString) || taskDB
-            setTasks(tasks)
-        }
+    useEffect(() =>{
+        filterTasks()
+    },[tasks])
 
-        getTasks()
-    } )
+    async function getTasks(){
+        const tasksString = await AsyncStorage.getItem('tasksState')
+        const tasks = tasksString && JSON.parse(tasks)
+    }
 
     const toggleTask = taskId => {
         const taskList = [...tasks]
@@ -64,7 +71,6 @@ export default function TaskList() {
                 task.doneAt = task.doneAt ? null : new Date()
             }
         });
-
         setTasks(taskList)
         filterTasks()
     }
@@ -103,11 +109,15 @@ export default function TaskList() {
     
         setTasks(tempTasks) //Altera o estado Da tarefa e Seta ela Atualizada
         setShowAddTask(false)
+
+        AsyncStorage.setItem('tasksState', JSON.stringify(tempTasks))
     }
 
     const deleteTask = id => {
         const tempTasks = tasks.filter(task => task.id !== id)
         setTasks(tempTasks)
+        
+        AsyncStorage.setItem('tasksState', JSON.stringify(tempTasks))
     }
 
     return (
